@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Whisper&display=swap');
+/* font-family: "Whisper", cursive; */
+/* font-family: "Raleway", sans-serif; */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color:#130b02;
+    margin: 0px 0.6ch;
+}
+
+body {
+    min-height: 100vh;
+    display: grid;
+    background-color: #492b09;
+    grid-template-columns: 1fr 90% 1fr;
+    grid-template-rows: 15vh 1fr 5vh;
+}
+
+.brown {
+    background-color: #492b09;
+}
+
+#top-bar {
+    grid-column: 1 / 4;
+    z-index: 1;
+    margin-top: -25px;
+    display: grid;
+    gap: 20%;
+    grid-template-columns: 1fr 1fr;
+}
+
+.title {
+    font-family: "Whisper", cursive;
+    font-size: 9.5vw;
+    color:#130c05;
+    margin-left: 8%;
+    white-space: nowrap;
+    align-self: self-end;
+}
+
+#bookshelf {
+    width: 20vw;
+    padding-top: 40px;
+    /* filter: invert(69%) sepia(29%) saturate(739%) hue-rotate(31deg) brightness(95%) contrast(90%); */
+}
+
+#library {
+    background-color:#a3b848;
+    box-shadow: inset 5px 8px 12px #606e20;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: fit-content;
+    gap: 15px;
+    padding: 5px 15px;
+    border-radius: 10px;
+}
+
+.card {
+    margin: 10px;
+    width: 95%;
+    height: 150px;
+    background-color: #d1e286;
+    justify-self: center;
+    border: 3px solid #606e20;
+    border-radius: 10px;
+    box-shadow: 2px 5px 6px #606e20;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 2fr;
+    z-index: 2;
+}
+
+.book-title {
+    grid-column: 1 / 3;
+    align-self: center;
+    justify-self: center;
+    font-family: "Whisper", cursive;
+    font-size: 4vw;
+    overflow: clip;
+}
+
+.book-author {
+    grid-column: 1 / 3;
+    align-self: center;
+    justify-self: center;
+}
+
+#footer {
+    grid-column: 1 / 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
