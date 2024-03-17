@@ -44,8 +44,28 @@ function setLibraryHtml(myLibrary) {
         ${readOrNot}
         </div>`
     }
+    myHtml += `<div id="add-book" class="card"><span id="add" title="Add a book"><a href="#">+</a></span></div>`
     document.getElementById('library').setHTML(myHtml);
-    console.log(myHtml)
 }
 
 setLibraryHtml(myLibrary);
+
+document.getElementById('add').addEventListener('click', function() {
+    let addBook = document.getElementById('add-book');
+    addBook.setAttribute('id', 'add-book-form');
+    addBook.setHTML(`<form>
+        <span><label>
+            Book Title: <input type="text">
+        </label></span>
+        <span><label>
+            Author Name: <input type="text">
+        </label></span>
+        <span><label>
+            Number of Pages: <input type="number">
+        </label></span>
+        <span><label>
+            Already Read?: <input type="checkbox">
+        </label></span>
+        <input type="submit" value="Submit">
+    </form>`);
+})
