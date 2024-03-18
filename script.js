@@ -17,15 +17,14 @@ function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.read = read;
+    if (read) {
+        this.read = true;
+    } else {
+        this.read = false;
+    }
 }
 
-function addBookToLibrary() {
-    let title = "Stinky Stinky" //document.something.value;
-    let author = "Lulu" //document.something.value;
-    let pages = 436 //parseInt(document.something.value);
-    let read = true //document.something.value;
-
+function addBookToLibrary(title, author, pages, read) {
     let newBook = new Book(title, author, pages, read)
     myLibrary.push(newBook)
 }
@@ -44,28 +43,49 @@ function setLibraryHtml(myLibrary) {
         ${readOrNot}
         </div>`
     }
-    myHtml += `<div id="add-book" class="card"><span id="add" title="Add a book"><a href="#">+</a></span></div>`
+    myHtml += `<div id="add-book" class="card"><span id="add" title="Add a book">+</span></div>`
     document.getElementById('library').setHTML(myHtml);
+
+    createAddBookFunction();
 }
 
 setLibraryHtml(myLibrary);
 
+function createAddBookFunction() {
 document.getElementById('add').addEventListener('click', function() {
     let addBook = document.getElementById('add-book');
     addBook.setAttribute('id', 'add-book-form');
-    addBook.setHTML(`<form>
-        <span><label>
-            Book Title: <input type="text">
-        </label></span>
-        <span><label>
-            Author Name: <input type="text">
-        </label></span>
-        <span><label>
-            Number of Pages: <input type="number">
-        </label></span>
-        <span><label>
-            Already Read?: <input type="checkbox">
-        </label></span>
+    addBook.setHTML(`<form id="addBookForm">
+        <label>
+            Book Title:  <input type="text" name="title">
+        </label>
+        <label>
+            Author Name: <input type="text" name="author">
+        </label>
+        <label>
+            Number of Pages: <input type="number" name="pages">
+        </label>
+        <label>
+            Already Read?: <input type="checkbox" name="read">
+        </label>
         <input type="submit" value="Submit">
     </form>`);
+
+    document.getElementById("addBookForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        
+        let form = document.getElementById("addBookForm");
+        let formData = new FormData(form);
+        // output as an object
+        console.log(Object.fromEntries(formData));
+        let formBook = Object.fromEntries(formData)
+
+        addBookToLibrary(formBook.title, formBook.author, formBook.pages, formBook.read);
+
+        let book = new Book(formBook.title, formBook.author, formBook.pages, formBook.read);
+        console.log(book);
+
+        setLibraryHtml(myLibrary);
+      });
 })
+}
