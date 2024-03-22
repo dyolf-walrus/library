@@ -1,4 +1,4 @@
-const myLibrary = [
+let myLibrary = [
     {
         title: "The Giver",
         author: "I have no idea",
@@ -24,11 +24,6 @@ function Book(title, author, pages, read) {
     }
 }
 
-function addBookToLibrary(title, author, pages, read) {
-    let newBook = new Book(title, author, pages, read)
-    myLibrary.push(newBook)
-}
-
 function setLibraryHtml(myLibrary) {
     let myHtml = '';
     let readOrNot;
@@ -46,13 +41,12 @@ function setLibraryHtml(myLibrary) {
     myHtml += `<div id="add-book" class="card"><span id="add" title="Add a book">+</span></div>`
     document.getElementById('library').setHTML(myHtml);
 
-    createAddBookFunction();
+    document.getElementById('add').addEventListener('click', function() {showForm()});
 }
 
 setLibraryHtml(myLibrary);
 
-function createAddBookFunction() {
-document.getElementById('add').addEventListener('click', function() {
+function showForm() {
     let addBook = document.getElementById('add-book');
     addBook.setAttribute('id', 'add-book-form');
     addBook.setHTML(`<form id="addBookForm">
@@ -71,21 +65,25 @@ document.getElementById('add').addEventListener('click', function() {
         <input type="submit" value="Submit">
     </form>`);
 
-    document.getElementById("addBookForm").addEventListener("submit", function (e) {
+    document.getElementById("addBookForm").addEventListener("submit", function (e) {submitBook(e)});
+}
+
+function submitBook(e) {
         e.preventDefault();
         
         let form = document.getElementById("addBookForm");
         let formData = new FormData(form);
         // output as an object
-        console.log(Object.fromEntries(formData));
         let formBook = Object.fromEntries(formData)
 
         addBookToLibrary(formBook.title, formBook.author, formBook.pages, formBook.read);
 
         let book = new Book(formBook.title, formBook.author, formBook.pages, formBook.read);
-        console.log(book);
 
         setLibraryHtml(myLibrary);
-      });
-})
+}
+
+function addBookToLibrary(title, author, pages, read) {
+    let newBook = new Book(title, author, pages, read)
+    myLibrary.push(newBook)
 }
