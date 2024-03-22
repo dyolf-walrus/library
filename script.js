@@ -1,4 +1,4 @@
-let myLibrary = [
+const myLibrary = [
     {
         title: "The Giver",
         author: "I have no idea",
@@ -7,7 +7,7 @@ let myLibrary = [
     },
     {
         title: "The Dictionary",
-        author: "Deez  Nuts",
+        author: "Deez Nuts",
         pages: 12,
         read: false
     }
@@ -30,7 +30,7 @@ function setLibraryHtml(myLibrary) {
     for (const book of myLibrary) {
         if (book.read == true) {
             readOrNot = `<span class="read-true">Already read this book</span>`
-        } else readOrNot = `<span class="read-false">Need to read this book</span>`
+        } else readOrNot = `<span class="read-false">Mark as read <input type="checkbox"></span>`
         myHtml += `<div class="card">
         <span class="book-title">${book.title}</span>
         <span class="book-author">by ${book.author}</span>
@@ -51,20 +51,26 @@ function showForm() {
     addBook.setAttribute('id', 'add-book-form');
     addBook.setHTML(`<form id="addBookForm">
         <label>
-            Book Title:  <input type="text" name="title">
+            <span>Book Title:</span>  <input id="book-title" type="text" name="title">
         </label>
         <label>
-            Author Name: <input type="text" name="author">
+            <span>Author Name:</span> <input type="text" name="author">
         </label>
         <label>
-            Number of Pages: <input type="number" name="pages">
+            <span>Number of Pages:</span> <input type="number" name="pages">
         </label>
-        <label>
-            Already Read?: <input type="checkbox" name="read">
+        <label class="keep-left">
+            <span>Already Read?:</span> <input class="more-space" type="checkbox" name="read">
         </label>
         <input type="submit" value="Submit">
+        <div class="hidden" id="error1">
+            Error - that book is already in your library!
+        </div>
     </form>`);
 
+    document.getElementById("book-title").addEventListener("click", function() {
+        document.getElementById('error1').classList.add('hidden');
+    })
     document.getElementById("addBookForm").addEventListener("submit", function (e) {submitBook(e)});
 }
 
@@ -76,14 +82,12 @@ function submitBook(e) {
         // output as an object
         let formBook = Object.fromEntries(formData)
 
-        addBookToLibrary(formBook.title, formBook.author, formBook.pages, formBook.read);
+        if (myLibrary.some(books => books.title == formBook.title)) {
+            document.getElementById('error1').classList.remove('hidden');
+        } else {
+            let book = new Book(formBook.title, formBook.author, formBook.pages, formBook.read);
+            myLibrary.push(book);
 
-        let book = new Book(formBook.title, formBook.author, formBook.pages, formBook.read);
-
-        setLibraryHtml(myLibrary);
-}
-
-function addBookToLibrary(title, author, pages, read) {
-    let newBook = new Book(title, author, pages, read)
-    myLibrary.push(newBook)
+            setLibraryHtml(myLibrary);
+        }
 }

@@ -147,6 +147,20 @@ form {
 label {
     display: flex;
     justify-content: center;
+    padding: 2px;
+    justify-content: space-between;
+}
+
+input {
+    margin-left: 7px;
+}
+
+.keep-left {
+    justify-self: flex-start;
+}
+
+.more-space {
+    margin-left: 2.2vw;
 }
 
 #add {
@@ -157,4 +171,15 @@ label {
 #add > a {
     text-decoration: none;
     color: #d27c18;
+}
+
+#error1 {
+    font-size: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(156, 2, 2);
+}
+
+.hidden {
+    visibility: hidden;
 }
