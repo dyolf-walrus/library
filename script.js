@@ -30,7 +30,7 @@ function setLibraryHtml(myLibrary) {
     for (const book of myLibrary) {
         if (book.read == true) {
             readOrNot = `<span class="read-true">Already read this book</span>`
-        } else readOrNot = `<span class="read-false">Mark as read <input data-title="${book.title}"type="checkbox"></span>`
+        } else readOrNot = `<span class="read-false">Mark as read <input class="markRead" id="${book.title}"type="checkbox"></span>`
         myHtml += `<div class="card">
         <span class="book-title">${book.title}</span>
         <span class="book-author">by ${book.author}</span>
@@ -51,6 +51,15 @@ function setLibraryHtml(myLibrary) {
     document.getElementById('add').addEventListener('click', function() {showForm()});
 
     confirmDeletion();
+
+    let checkboxes = document.getElementsByClassName('markRead');
+    for (const box of checkboxes) {
+        box.addEventListener('click', function(event) {
+            let index = myLibrary.findIndex((book) => book.title == event.target.id)
+            myLibrary[index].read = true;
+            setLibraryHtml(myLibrary);
+        })
+    }
 }
 
 setLibraryHtml(myLibrary);
@@ -60,13 +69,13 @@ function showForm() {
     addBook.setAttribute('id', 'add-book-form');
     addBook.setHTML(`<form id="addBookForm">
         <label>
-            <span>Book Title:</span>  <input id="book-title" type="text" name="title">
+            <span>Book Title:</span>  <input id="book-title" type="text" name="title" required>
         </label>
         <label>
-            <span>Author Name:</span> <input type="text" name="author">
+            <span>Author Name:</span> <input type="text" name="author" required>
         </label>
         <label>
-            <span>Number of Pages:</span> <input type="number" name="pages">
+            <span>Number of Pages:</span> <input type="number" name="pages" required>
         </label>
         <label class="keep-left">
             <span>Already Read?:</span> <input class="more-space" type="checkbox" name="read">
