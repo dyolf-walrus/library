@@ -1,14 +1,8 @@
 const myLibrary = [
     {
-        title: "The Giver",
-        author: "I have no idea",
-        pages: 567,
-        read: true
-    },
-    {
-        title: "The Dictionary",
-        author: "Deez Nuts",
-        pages: 12,
+        title: "The Merriam-Webster Dictionary",
+        author: "Merriam Webster",
+        pages: 960,
         read: false
     }
 ];
