@@ -30,12 +30,13 @@ function setLibraryHtml(myLibrary) {
     for (const book of myLibrary) {
         if (book.read == true) {
             readOrNot = `<span class="read-true">Already read this book</span>`
-        } else readOrNot = `<span class="read-false">Mark as read <input type="checkbox"></span>`
+        } else readOrNot = `<span class="read-false">Mark as read <input data-title="${book.title}"type="checkbox"></span>`
         myHtml += `<div class="card">
         <span class="book-title">${book.title}</span>
         <span class="book-author">by ${book.author}</span>
         <span class="page-number">${book.pages} pages long</span>
         ${readOrNot}
+        <div data-title="${book.title}" class="delete"><button><img src="images/road-sign-147409.svg"></button></div>
         </div>`
     }
     myHtml += `<div id="add-book" class="card"><span id="add" title="Add a book">+</span></div>`
@@ -82,7 +83,7 @@ function submitBook(e) {
         // output as an object
         let formBook = Object.fromEntries(formData)
 
-        if (myLibrary.some(books => books.title == formBook.title)) {
+        if (myLibrary.some(books => books.title.toLowerCase() == formBook.title.toLowerCase())) {
             document.getElementById('error1').classList.remove('hidden');
         } else {
             let book = new Book(formBook.title, formBook.author, formBook.pages, formBook.read);
