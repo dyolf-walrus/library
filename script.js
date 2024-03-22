@@ -36,13 +36,21 @@ function setLibraryHtml(myLibrary) {
         <span class="book-author">by ${book.author}</span>
         <span class="page-number">${book.pages} pages long</span>
         ${readOrNot}
-        <div data-title="${book.title}" class="delete"><button><img src="images/road-sign-147409.svg"></button></div>
+        <div id="${book.title}" class="delete"><img data-title="${book.title}" src="images/road-sign-147409.svg"></div>
+        <dialog id="confirmDelete${book.title}"><div class=styleDialog>
+            <p>Are you sure you want to delete ${book.title}?</p>
+            <button id="confirmBtn${book.title}" class="confirm" value="default">Confirm</button>
+            <button id="cancelBtn${book.title}" value="cancel" class="cancel" formmethod="dialog">Cancel</button></div>
+        </dialog>
         </div>`
     }
     myHtml += `<div id="add-book" class="card"><span id="add" title="Add a book">+</span></div>`
+
     document.getElementById('library').setHTML(myHtml);
 
     document.getElementById('add').addEventListener('click', function() {showForm()});
+
+    confirmDeletion();
 }
 
 setLibraryHtml(myLibrary);
@@ -91,4 +99,29 @@ function submitBook(e) {
 
             setLibraryHtml(myLibrary);
         }
+}
+
+function confirmDeletion() {
+    let deleteButtons = document.getElementsByClassName('delete');
+    for (const button of deleteButtons) {
+        button.addEventListener('click', function() {
+            console.log(button.id)
+            let dialog = document.getElementById(`confirmDelete${button.id}`);
+            dialog.showModal();
+        })
+        //confirm button
+        document.getElementById(`confirmBtn${button.id}`).addEventListener('click', function(event) {
+            let dialog = document.getElementById(`confirmDelete${button.id}`);
+            dialog.close();
+            let index = myLibrary.findIndex((book) => book.title == button.id);
+            myLibrary.splice(index, 1);
+            console.log(myLibrary);
+            setLibraryHtml(myLibrary);
+        })
+        //cancel button
+        document.getElementById(`cancelBtn${button.id}`).addEventListener('click', function(event) {
+            let dialog = document.getElementById(`confirmDelete${button.id}`);
+            dialog.close();
+        })
+    }
 }
