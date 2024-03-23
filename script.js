@@ -40,7 +40,10 @@ function setLibraryHtml(myLibrary) {
     }
     myHtml += `<div id="add-book" class="card"><span id="add" title="Add a book">+</span></div>`
 
-    document.getElementById('library').setHTML(myHtml);
+    let lib = document.getElementById('library');
+    console.log(lib);
+    //lib.setHTML(myHtml);
+    lib.innerHTML = myHtml;
 
     document.getElementById('add').addEventListener('click', function() {showForm()});
 
