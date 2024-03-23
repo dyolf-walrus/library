@@ -64,7 +64,7 @@ setLibraryHtml(myLibrary);
 function showForm() {
     let addBook = document.getElementById('add-book');
     addBook.setAttribute('id', 'add-book-form');
-    addBook.setHTML(`<form id="addBookForm">
+    addBook.innerHTML = `<form id="addBookForm">
         <label>
             <span>Book Title:</span>  <input id="book-title" type="text" name="title" required>
         </label>
@@ -81,7 +81,7 @@ function showForm() {
         <div class="hidden" id="error1">
             Error - that book is already in your library!
         </div>
-    </form>`);
+    </form>`;
 
     document.getElementById("book-title").addEventListener("click", function() {
         document.getElementById('error1').classList.add('hidden');
