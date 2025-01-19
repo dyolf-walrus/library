@@ -1,12 +1,28 @@
-const myLibrary = [
-    {
-        title: "The Merriam-Webster Dictionary",
-        author: "Merriam Webster",
-        pages: 960,
-        read: false
+class Book {
+    constructor (title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        if (read) {
+            this.read = true;
+        } else {
+            this.read = false;
+        }
     }
+
+    markRead() {
+        this.read = true;
+    }
+}
+
+let firstBook = new Book("The Merriam-Webster Dictionary", "Merriam Webster", 960, false);
+
+const myLibrary = [
+    
+    firstBook
 ];
 
+/*
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
@@ -17,6 +33,7 @@ function Book(title, author, pages, read) {
         this.read = false;
     }
 }
+    */
 
 function setLibraryHtml(myLibrary) {
     let myHtml = '';
@@ -53,7 +70,7 @@ function setLibraryHtml(myLibrary) {
     for (const box of checkboxes) {
         box.addEventListener('click', function(event) {
             let index = myLibrary.findIndex((book) => book.title == event.target.id)
-            myLibrary[index].read = true;
+            myLibrary[index].markRead();
             setLibraryHtml(myLibrary);
         })
     }
